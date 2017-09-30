@@ -21,6 +21,17 @@ function chooseImage(count){
   else {return dead}
 }
 
+function unique_char(word){
+  var str = word.replace(" ","")
+  var uniql=""
+  for (var x=0; x < str.length; x++){
+    if (uniql.indexOf(str.charAt(x)) === -1){
+      uniql += str[x] 
+    }
+  }
+  return uniql
+}
+
 class Game extends Component {
   constructor(props){
     super(props);
@@ -32,6 +43,7 @@ class Game extends Component {
     };
     this.onWrong = this.onWrong.bind(this);
   }
+
   render() {
     return (
       <div className="Game">
@@ -40,14 +52,19 @@ class Game extends Component {
          <input type='text' value={this.state.value} style={{ borderWidth: '3px'}} onChange={event => this.onWrong(event.target.value) } /> 
         </div>
         <div>
-          <p/>{console.log(this.state.rightList, this.state.wrongList)}
+          {this.state.wrongCount >= 7 ? <div style={{fontSize: '72px'}}>You Lost :(</div> : <div/>}
+          {this.state.rightList.length === unique_char(breed).length ? <div style={{fontSize: '72px'}}>You Win! :D</div> : <div/> }
+          {console.log(this.state.wrongList, this.state.rightList)}
           </div>
       </div>
     );
   }
+
   onWrong(letter){
     const wList = this.state.wrongList
-    if (this.state.wrongCount < 7){
+    const rList = this.state.rightList
+    const numUnique = unique_char(breed).length;
+    if (wList.length < 7 && rList.length < numUnique){
       if (!breed.includes(letter)){
         if (!wList.find((h) => h === letter)){
           wList.push(letter)
@@ -55,7 +72,6 @@ class Game extends Component {
         }
       }
       else {
-        const rList = this.state.rightList
         if(!rList.find((h) => h === letter)){
           rList.push(letter)
           this.setState({rightList: rList, value: ''})
