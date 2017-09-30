@@ -8,6 +8,8 @@ import right_arm from './img/right_arm.png';
 import left_arm from './img/left_arm.png';
 import dead from './img/dead.png';
 
+const breed = "sample breed";
+
 function chooseImage(count){
   if (count === 0){return base}
   else if (count === 1){return head}
@@ -44,17 +46,21 @@ class Game extends Component {
     );
   }
   onWrong(letter){
-    if (letter !== 'a' && letter !== 'b' && letter !== 'c'){
-      const wList = this.state.wrongList
-      if (!wList.find((h) => h === letter)){
-        wList.push(letter)
-        this.setState({wrongCount: this.state.wrongCount + 1, wrongList: wList, value: ''})
+    const wList = this.state.wrongList
+    if (this.state.wrongCount < 7){
+      if (!breed.includes(letter)){
+        if (!wList.find((h) => h === letter)){
+          wList.push(letter)
+          this.setState({wrongCount: this.state.wrongCount + 1, wrongList: wList, value: ''})
+        }
       }
-    }
-    else {
-      const rList = this.state.rightList
-      rList.push(letter)
-      this.setState({rightList: rList, value: ''})
+      else {
+        const rList = this.state.rightList
+        if(!rList.find((h) => h === letter)){
+          rList.push(letter)
+          this.setState({rightList: rList, value: ''})
+        }
+      }
     }
   }
 }
