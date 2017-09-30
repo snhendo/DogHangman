@@ -1,1 +1,1 @@
-App that checkers
+Dog Hangman
