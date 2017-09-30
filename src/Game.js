@@ -22,19 +22,40 @@ function chooseImage(count){
 class Game extends Component {
   constructor(props){
     super(props);
-    this.state = {wrongCount: 0};
+    this.state = {
+      wrongCount: 0, 
+      wrongList: [],
+      rightList: [],
+      value: '',
+    };
     this.onWrong = this.onWrong.bind(this);
   }
   render() {
     return (
       <div className="Game">
-       <h1>dog hangman</h1>
-       <img style={{ height: '300px'}}  src={chooseImage(this.state.wrongCount)} onClick={ this.onWrong} />
+       <img style={{ height: '300px'}}  src={chooseImage(this.state.wrongCount)}/>
+       <div>
+         <input type='text' value={this.state.value} style={{ borderWidth: '3px'}} onChange={event => this.onWrong(event.target.value) } /> 
+        </div>
+        <div>
+          <p/>{console.log(this.state.rightList, this.state.wrongList)}
+          </div>
       </div>
     );
   }
-  onWrong(){
-    this.setState({wrongCount: this.state.wrongCount + 1})
+  onWrong(letter){
+    if (letter !== 'a' && letter !== 'b' && letter !== 'c'){
+      const wList = this.state.wrongList
+      if (!wList.find((h) => h === letter)){
+        wList.push(letter)
+        this.setState({wrongCount: this.state.wrongCount + 1, wrongList: wList, value: ''})
+      }
+    }
+    else {
+      const rList = this.state.rightList
+      rList.push(letter)
+      this.setState({rightList: rList, value: ''})
+    }
   }
 }
 
