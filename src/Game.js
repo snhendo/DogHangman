@@ -54,11 +54,14 @@ class Game extends Component {
   render() {
     return (
       <div className="Game">
-       <img style={{ height: '300px', display: 'inline-block'}}  src={chooseImage(this.state.wrongCount)}/>
+       <img alt='hangman' style={{ height: '300px', display: 'inline-block'}}  src={chooseImage(this.state.wrongCount)}/>
        <div>
          <input type='text' value={this.state.value} style={{ borderWidth: '3px'}} onChange={event => this.onInputChange(event.target.value)} /> 
         </div>
         <BlankSpaces word={this.props.breed} rightList={this.state.rightList} />
+        <div>
+          {this.state.wrongList.map( (val, index) => <div style={{display: 'inline-block'}} key={index}>{val}</div>)}
+        </div>
         <div>
           {this.state.wrongCount >= 7 ? <div style={{fontSize: '48px'}}>You Lost :( <div style={{fontSize: '24px'}}>Correct answer: {this.props.breed}</div></div> : <div/>}
           {this.state.rightList.length === unique_char(this.props.breed).length ? <div style={{fontSize: '48px'}}>You Win! :D</div> : <div/> }
