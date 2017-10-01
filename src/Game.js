@@ -49,7 +49,7 @@ class Game extends Component {
       <div className="Game">
        <img style={{ height: '300px'}}  src={chooseImage(this.state.wrongCount)}/>
        <div>
-         <input type='text' value={this.state.value} style={{ borderWidth: '3px'}} onChange={event => this.onWrong(event.target.value) } /> 
+         <input type='text' value={this.state.value} style={{ borderWidth: '3px'}} onChange={event => this.onWrong(event.target.value)} /> 
         </div>
         <div>
           {this.state.wrongCount >= 7 ? <div style={{fontSize: '72px'}}>You Lost :(</div> : <div/>}
