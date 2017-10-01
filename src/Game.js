@@ -8,7 +8,7 @@ import right_arm from './img/right_arm.png';
 import left_arm from './img/left_arm.png';
 import dead from './img/dead.png';
 
-const breed = "sample breed";
+// const this.props.breed = "sample this.props.breed";
 
 function chooseImage(count){
   if (count === 0){return base}
@@ -22,15 +22,22 @@ function chooseImage(count){
 }
 
 function unique_char(word){
-  var str = word.replace(" ","")
-  var uniql=""
-  for (var x=0; x < str.length; x++){
-    if (uniql.indexOf(str.charAt(x)) === -1){
-      uniql += str[x] 
+  if (word) {
+    var str = word.replace(" ","")
+    var uniql=""
+    for (var x=0; x < str.length; x++){
+      if (uniql.indexOf(str.charAt(x)) === -1){
+        uniql += str[x] 
+      }
     }
+    return uniql
   }
-  return uniql
+  return '';
 }
+
+const BlankSpaces = ({ word }) => (
+  word.split('').map((val, index) => (<div>{val === ' ' ? '    ' : '___'}</div>))
+)
 
 class Game extends Component {
   constructor(props){
@@ -51,9 +58,10 @@ class Game extends Component {
        <div>
          <input type='text' value={this.state.value} style={{ borderWidth: '3px'}} onChange={event => this.onWrong(event.target.value)} /> 
         </div>
+        <BlankSpaces word={this.props.breed} />
         <div>
           {this.state.wrongCount >= 7 ? <div style={{fontSize: '72px'}}>You Lost :(</div> : <div/>}
-          {this.state.rightList.length === unique_char(breed).length ? <div style={{fontSize: '72px'}}>You Win! :D</div> : <div/> }
+          {this.state.rightList.length === unique_char(this.props.breed).length ? <div style={{fontSize: '72px'}}>You Win! :D</div> : <div/> }
           {console.log(this.state.wrongList, this.state.rightList)}
           </div>
       </div>
@@ -63,9 +71,9 @@ class Game extends Component {
   onWrong(letter){
     const wList = this.state.wrongList
     const rList = this.state.rightList
-    const numUnique = unique_char(breed).length;
+    const numUnique = unique_char(this.props.breed).length;
     if (wList.length < 7 && rList.length < numUnique){
-      if (!breed.includes(letter)){
+      if (!this.props.breed.includes(letter)){
         if (!wList.find((h) => h === letter)){
           wList.push(letter)
           this.setState({wrongCount: this.state.wrongCount + 1, wrongList: wList, value: ''})
