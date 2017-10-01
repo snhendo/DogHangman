@@ -35,9 +35,9 @@ function unique_char(word){
   return '';
 }
 
-const BlankSpaces = ({ word }) => (
-  word.split('').map((val, index) => (<div>{val === ' ' ? '    ' : '___'}</div>))
-)
+const BlankSpaces = ({ word, rightList }) => (<div>
+  {word && word.split('').map((val, index) => (<span style={{ minWidth: '2px' }} key={index}>{rightList.find(v => v === val) ? val : ' ___ '}</span>))}
+</div>)
 
 class Game extends Component {
   constructor(props){
@@ -58,7 +58,7 @@ class Game extends Component {
        <div>
          <input type='text' value={this.state.value} style={{ borderWidth: '3px'}} onChange={event => this.onWrong(event.target.value)} /> 
         </div>
-        <BlankSpaces word={this.props.breed} />
+        <BlankSpaces word={this.props.breed} rightList={this.state.rightList} />
         <div>
           {this.state.wrongCount >= 7 ? <div style={{fontSize: '72px'}}>You Lost :(</div> : <div/>}
           {this.state.rightList.length === unique_char(this.props.breed).length ? <div style={{fontSize: '72px'}}>You Win! :D</div> : <div/> }
