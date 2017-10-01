@@ -5,7 +5,7 @@ import { listDogBreeds, getImageForBreed } from './ajax';
 
 const DogBreeds = ({ breeds, images, onGetImage }) => (
   <div>
-    {images != null ? <img alt="loading your dogs" src={images} /> : <div />} 
+    {images != null ? <img alt="loading your dogs" src={images} style={{display: 'inline-block'}}/> : <div />} 
     {}
   </div>
 ) 
